@@ -1,32 +1,56 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <div id="app" class="container mt-2">
+    <div class="mb-4">
+      <router-link to="/" v-if="existeUsuario" class="btn btn-primary mr-2"
+        >Inicio</router-link
+      >
+      <router-link to="/acceso" v-if="!existeUsuario" class="btn btn-info mr-2"
+        >Acceso</router-link
+      >
+      <router-link
+        to="/registro"
+        v-if="!existeUsuario"
+        class="btn btn-secondary"
+        >Registro</router-link
+      >
+
+      <button
+        @click="cerrarSesion"
+        v-if="existeUsuario"
+        class="btn btn-secondary mr-2 float-right"
+      >
+        Cerrar Sesión
+      </button>
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
+<script>
+import { mapActions, mapGetters } from 'vuex';
+
+export default {
+  methods: {
+    ...mapActions(['cerrarSesion']),
+  },
+  computed: {
+    ...mapGetters(['existeUsuario']),
+  },
+};
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+body {
+  background: #ece9e6; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #ffffff,
+    #ece9e6
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #ffffff,
+    #ece9e6
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 </style>
